@@ -39,6 +39,7 @@ var day2;
         const fileContent = fs.readFileSync(filePath, 'utf-8');
         return fileContent.split('\n');
     }
+    day2.loadFileLines = loadFileLines;
     const input = loadFileLines("./day2.txt");
     function isValidArray(arr, depth) {
         let operator = true;

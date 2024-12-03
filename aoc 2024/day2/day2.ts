@@ -12,7 +12,7 @@ namespace day2{
         return false;
     }
     
-    function loadFileLines(filePath: string): string[] {
+    export function loadFileLines(filePath: string): string[] {
         const fileContent = fs.readFileSync(filePath, 'utf-8');
         return fileContent.split('\n');
     }

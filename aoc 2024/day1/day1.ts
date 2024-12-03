@@ -2,7 +2,7 @@ import * as fs from 'fs';
 
 namespace day1{
 
-    function Fold<T, R>(fxy: (acc: R, current: T) => R, seed: R){
+    export function Fold<T, R>(fxy: (acc: R, current: T) => R, seed: R){
         return function(arr: T[]): R{
             if (arr.length <= 0) return seed
             let Result = seed;

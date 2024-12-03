@@ -24,8 +24,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = __importStar(require("fs"));
-var day1;
-(function (day1) {
+var day3;
+(function (day3) {
     function Fold(fxy, seed) {
         return function (arr) {
             if (arr.length <= 0)
@@ -37,41 +37,24 @@ var day1;
             return Result;
         };
     }
-    day1.Fold = Fold;
-    console.log(Fold((x, y) => x + y, 0)([1, 1, 1, 1, 1]));
+    day3.Fold = Fold;
     function loadFileLines(filePath) {
         const fileContent = fs.readFileSync(filePath, 'utf-8');
-        return fileContent.split('\n');
+        return fileContent.split('\n')[0];
     }
-    const lines = loadFileLines("./dag1.txt");
-    const cleanedLines = lines.map(line => line.replace(/\r/g, ''));
-    console.log(cleanedLines);
-    const LeftNums = [];
-    const RightNums = [];
-    cleanedLines.forEach(line => {
-        const [num1, num2] = line.split('   ').map(Number);
-        LeftNums.push(num1);
-        RightNums.push(num2);
-    });
-    const combined = [];
-    const sortedLeft = LeftNums.sort();
-    const sortedRight = RightNums.sort();
-    for (let i = 0; i < sortedLeft.length; i++) {
-        combined.push(Math.abs(sortedRight[i] - sortedLeft[i]));
-    }
-    console.log(Fold((x, y) => x + y, 0)(combined));
-    function similarity(left, right) {
-        let scores = 0;
-        for (const num of left) {
-            let count = 0;
-            for (const num2 of right) {
-                if (num2 === num) {
-                    count++;
-                }
-            }
-            scores += num * count;
+    day3.loadFileLines = loadFileLines;
+    const input = loadFileLines("./day3.txt");
+    function findAllMulPatterns(text) {
+        const pattern = /mul\((\d{1,3}),(\d{1,3})\)/g;
+        const results = [];
+        for (const match of text.matchAll(pattern)) {
+            const num1 = parseInt(match[1], 10);
+            //console.log(num1)
+            const num2 = parseInt(match[2], 10);
+            //console.log(num2)
+            results.push(num1 * num2);
         }
-        return scores;
+        return Fold((x, y) => x + y, 0)(results);
     }
-    console.log(similarity(sortedLeft, sortedRight));
-})(day1 || (day1 = {}));
+    console.log(findAllMulPatterns(input));
+})(day3 || (day3 = {}));
