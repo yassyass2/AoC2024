@@ -53,16 +53,20 @@ var day3;
         const matches = text.matchAll(/mul\((\d{1,3}),(\d{1,3})\)|do\(\)|don't\(\)/g);
         for (const match of matches) {
             const [fullMatch, num1, num2] = match;
-            if (dontPattern.test(fullMatch)) {
-                enabled = false;
+            if (pattern.test(fullMatch) && enabled) {
+                console.log([fullMatch, num1, num2]);
+                const n1 = parseInt(num1);
+                const n2 = parseInt(num2);
+                results.push(n1 * n2);
+            }
+            else if (pattern.test(fullMatch) && !enabled) {
+                ;
+            }
+            else if (dontPattern.test(fullMatch)) {
+                enabled = !enabled;
             }
             else if (doPattern.test(fullMatch)) {
-                enabled = true;
-            }
-            else if (pattern.test(fullMatch) && enabled) {
-                const n1 = parseInt(num1, 10);
-                const n2 = parseInt(num2, 10);
-                results.push(n1 * n2);
+                enabled = !enabled;
             }
         }
         return Fold((x, y) => x + y, 0)(results);
