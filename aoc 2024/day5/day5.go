@@ -30,3 +30,13 @@ func readInput(filename string) ([][]string, [][]string) {
 
 	return rules, sequence
 }
+
+func countMiddles(sequence [][]string, rules [][]string) {
+	total := 0
+	for i, instance := range sequence {
+
+		for j, value := range instance {
+
+		}
+	}
+}
