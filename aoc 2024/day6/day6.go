@@ -38,44 +38,47 @@ func findStart(m [][]string) []int {
 }
 
 func move(m [][]string, p []int, mapping map[string][]int) [][]string {
-	if p[0] < 1 || p[0] > 128 || p[1] < 1 || p[1] > 128 {
-		return m
-	}
-	old := p
-	symbol := m[p[0]][p[1]]
-	change_vector := mapping[symbol]
+	for {
+		if p[0] < 1 || p[0] > 128 || p[1] < 1 || p[1] > 128 {
+			break
+		}
 
-	p[0] += change_vector[0]
-	p[1] += change_vector[1]
-	if p[0] < 1 || p[0] > 129 || p[1] < 1 || p[1] > 129 || m[p[0]][p[1]] == "#" {
-		p[0], p[1] = old[0], old[1]
-		if symbol == "^" {
-			m[p[0]][p[1]] = ">"
-		} else if symbol == ">" {
-			m[p[0]][p[1]] = "v"
-		} else if symbol == "v" {
-			m[p[0]][p[1]] = "<"
+		old := []int{p[0], p[1]}
+		symbol := m[p[0]][p[1]]
+		change_vector := mapping[symbol]
+
+		p[0] += change_vector[0]
+		p[1] += change_vector[1]
+
+		if p[0] < 1 || p[0] > 129 || p[1] < 1 || p[1] > 129 || m[p[0]][p[1]] == "#" {
+			p[0], p[1] = old[0], old[1]
+
+			switch symbol {
+			case "^":
+				m[p[0]][p[1]] = ">"
+			case ">":
+				m[p[0]][p[1]] = "v"
+			case "v":
+				m[p[0]][p[1]] = "<"
+			case "<":
+				m[p[0]][p[1]] = "^"
+			}
 		} else {
-			m[p[0]][p[1]] = "^"
-		}
-	} else {
-		m[old[0]][old[1]] = "X"
-		if symbol == "^" {
-			m[p[0]][p[1]] = ">"
-		} else if symbol == ">" {
-			m[p[0]][p[1]] = "v"
-		} else if symbol == "v" {
-			m[p[0]][p[1]] = "<"
-		} else {
-			m[p[0]][p[1]] = "^"
+			m[old[0]][old[1]] = "X"
+
+			switch symbol {
+			case "^":
+				m[p[0]][p[1]] = ">"
+			case ">":
+				m[p[0]][p[1]] = "v"
+			case "v":
+				m[p[0]][p[1]] = "<"
+			case "<":
+				m[p[0]][p[1]] = "^"
+			}
 		}
 	}
-	newP := make([]int, len(p))
-	newM := make([][]string, len(m))
-	copy(newM, m)
-	copy(newP, p)
-	//fmt.Print(countPath(newM))
-	return move(newM, newP, mapping)
+	return m
 }
 
 func countPath(m [][]string) int {
