@@ -4,8 +4,8 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"strings"
 	"strconv"
+	"strings"
 )
 
 func readInput(filename string) [][]string {
@@ -22,21 +22,25 @@ func readInput(filename string) [][]string {
 
 	for scanner.Scan() {
 		line := strings.TrimSpace(scanner.Text())
-		calibrations = append(calibrations, strings.Split(line, " "))
+		sep := strings.Split(line, " ")
+		aim := sep[0]
+		sep[0] = aim[:len(aim)-1]
+
+		calibrations = append(calibrations, sep)
 	}
 	return calibrations
 }
 
-func CheckSum(aim int, products []int) bool{
-	return true
+func CheckSum(aim int, accum int, products []int) bool {
+	if len(products) == 1 {
+		return accum+products[0] == aim || accum*products[0] == aim
+	}
+	return CheckSum(aim, accum*products[0], products[1:]) || CheckSum(aim, accum+products[0], products[1:])
 }
 
 func calculateResult(calibs [][]string) int {
 	total := 0
-	for _, val := range calibs{
-		aim := val[0]
-		val[0] = aim[:len(aim)-1]
-
+	for _, val := range calibs {
 		steps := make([]int, len(val))
 
 		for i, str := range val {
@@ -48,11 +52,13 @@ func calculateResult(calibs [][]string) int {
 			steps[i] = num
 		}
 
-		if CheckSum()()
+		if CheckSum(steps[0], steps[1], steps[2:]) {
+			total += steps[0]
+		}
 	}
 	return total
 }
 
 func main() {
-	fmt.Print(readInput("day7.txt"))
+	fmt.Print(calculateResult(readInput("day7.txt")))
 }
