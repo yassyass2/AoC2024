@@ -31,11 +31,16 @@ func readInput(filename string) [][]string {
 	return calibrations
 }
 
-func CheckSum(aim int, accum int, products []int) bool {
+func checkSum(aim int, accum int, products []int) bool {
 	if len(products) == 1 {
-		return accum+products[0] == aim || accum*products[0] == aim
+		return accum+products[0] == aim || accum*products[0] == aim || concat(accum, products[0]) == aim
 	}
-	return CheckSum(aim, accum*products[0], products[1:]) || CheckSum(aim, accum+products[0], products[1:])
+	return checkSum(aim, accum*products[0], products[1:]) || checkSum(aim, accum+products[0], products[1:]) || checkSum(aim, concat(accum, products[0]), products[1:])
+}
+
+func concat(c1 int, c2 int) int {
+	concatted, _ := strconv.Atoi(strconv.Itoa(c1) + strconv.Itoa(c2))
+	return concatted
 }
 
 func calculateResult(calibs [][]string) int {
@@ -52,7 +57,7 @@ func calculateResult(calibs [][]string) int {
 			steps[i] = num
 		}
 
-		if CheckSum(steps[0], steps[1], steps[2:]) {
+		if checkSum(steps[0], steps[1], steps[2:]) {
 			total += steps[0]
 		}
 	}
