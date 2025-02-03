@@ -22,10 +22,7 @@ func readInput(filename string) [][]string {
 
 	for scanner.Scan() {
 		line := strings.TrimSpace(scanner.Text())
-		sep := strings.Split(line, " ")
-		aim := sep[0]
-		sep[0] = aim[:len(aim)-1]
-
+		sep := strings.Split(line, "")
 		Map = append(Map, sep)
 	}
 	return Map
@@ -36,7 +33,7 @@ func getNodes(Map [][]string) [][]string {
 	for y, ant := range Map {
 		for x, node := range ant {
 			if node != "." {
-				nodes = append(node, []string{node, strconv.Itoa(y), strconv.Itoa(x)})
+				nodes = append(nodes, []string{node, strconv.Itoa(y), strconv.Itoa(x)})
 			}
 		}
 	}
