@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -30,6 +31,18 @@ func readInput(filename string) [][]string {
 	return Map
 }
 
+func getNodes(Map [][]string) [][]string {
+	var nodes [][]string
+	for y, ant := range Map {
+		for x, node := range ant {
+			if node != "." {
+				nodes = append(node, []string{node, strconv.Itoa(y), strconv.Itoa(x)})
+			}
+		}
+	}
+	return nodes
+}
+
 func main() {
-	fmt.Print(readInput("day8.txt"))
+	fmt.Print(getNodes(readInput("day8.txt")))
 }
