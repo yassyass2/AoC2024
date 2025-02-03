@@ -8,12 +8,12 @@ import (
 )
 
 func readInput(filename string) [][]string {
-	antenna := [][]string{}
+	Map := [][]string{}
 
 	file, err := os.Open(filename)
 
 	if err != nil {
-		return antenna
+		return Map
 	}
 	defer file.Close()
 
@@ -25,9 +25,9 @@ func readInput(filename string) [][]string {
 		aim := sep[0]
 		sep[0] = aim[:len(aim)-1]
 
-		antenna = append(antenna, sep)
+		Map = append(Map, sep)
 	}
-	return antenna
+	return Map
 }
 
 func main() {
