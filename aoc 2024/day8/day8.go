@@ -18,7 +18,6 @@ func readInput(filename string) [][]string {
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
-
 	for scanner.Scan() {
 		line := strings.TrimSpace(scanner.Text())
 		sep := strings.Split(line, "")
@@ -27,22 +26,22 @@ func readInput(filename string) [][]string {
 	return Map
 }
 
-func getNodes(Map [][]string) map[string][][]int {
-	SeperatedNodes := make(map[string][][]int)
+func getMappedNodes(Map [][]string) map[string][][]int {
+	MappedNodes := make(map[string][][]int)
 	for y, ant := range Map {
 		for x, node := range ant {
 			if node != "." {
-				if _, exists := SeperatedNodes[node]; exists {
-					SeperatedNodes[node] = append(SeperatedNodes[node], []int{y, x})
+				if _, exists := MappedNodes[node]; exists {
+					MappedNodes[node] = append(MappedNodes[node], []int{y, x})
 				} else {
-					SeperatedNodes[node] = [][]int{{y, x}}
+					MappedNodes[node] = [][]int{{y, x}}
 				}
 			}
 		}
 	}
-	return SeperatedNodes
+	return MappedNodes
 }
 
 func main() {
-	fmt.Print(getNodes(readInput("day8.txt")))
+	fmt.Print(getMappedNodes(readInput("day8.txt")))
 }
