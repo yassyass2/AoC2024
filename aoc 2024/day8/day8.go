@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"strconv"
 	"strings"
 )
 
@@ -28,16 +27,20 @@ func readInput(filename string) [][]string {
 	return Map
 }
 
-func getNodes(Map [][]string) [][]string {
-	var nodes [][]string
+func getNodes(Map [][]string) map[string][][]int {
+	SeperatedNodes := make(map[string][][]int)
 	for y, ant := range Map {
 		for x, node := range ant {
 			if node != "." {
-				nodes = append(nodes, []string{node, strconv.Itoa(y), strconv.Itoa(x)})
+				if _, exists := SeperatedNodes[node]; exists {
+					SeperatedNodes[node] = append(SeperatedNodes[node], []int{y, x})
+				} else {
+					SeperatedNodes[node] = [][]int{{y, x}}
+				}
 			}
 		}
 	}
-	return nodes
+	return SeperatedNodes
 }
 
 func main() {
