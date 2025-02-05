@@ -73,4 +73,5 @@ func main() {
 		coords := specificNode(value)
 		total += len(coords)
 	}
+	fmt.Print(total)
 }
