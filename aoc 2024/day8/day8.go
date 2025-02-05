@@ -65,10 +65,12 @@ func specificNode(cords [][]int) [][]int {
 }
 
 func main() {
+	total := 0
 	original := readInput("day8.txt")
 	mapped := getMappedNodes(original)
 	fmt.Print(mapped)
 	for _, value := range mapped {
-		specificNode(value)
+		coords := specificNode(value)
+		total += len(coords)
 	}
 }
