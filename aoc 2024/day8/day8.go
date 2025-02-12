@@ -42,8 +42,8 @@ func getMappedNodes(Map [][]string) map[string][][]int {
 	return MappedNodes
 }
 
-func specificNode(cords [][]int) [][]int {
-	resultSet := [][]int{}
+func specificNode(cords [][]int) []int {
+	resultSet := []int{}
 	for index, cord := range cords {
 		for ind, coor := range cords {
 			if index == ind {
@@ -54,10 +54,10 @@ func specificNode(cords [][]int) [][]int {
 			upperY := cord[0] + (cord[0] - coor[0])
 			upperX := cord[1] + (cord[1] - coor[1])
 			if underY >= 0 && underY <= 49 && underX >= 0 && underX <= 49 {
-				resultSet = append(resultSet, []int{underY, underX})
+				resultSet = append(resultSet, underY*underX)
 			}
 			if upperY >= 0 && upperY <= 49 && upperX >= 0 && upperX <= 49 {
-				resultSet = append(resultSet, []int{upperY, upperX})
+				resultSet = append(resultSet, upperY*upperX)
 			}
 		}
 	}
@@ -68,7 +68,7 @@ func main() {
 	total := 0
 	original := readInput("day8.txt")
 	mapped := getMappedNodes(original)
-	fmt.Print(mapped)
+	// fmt.Print(mapped)
 	for _, value := range mapped {
 		coords := specificNode(value)
 		total += len(coords)
